@@ -42,8 +42,8 @@ mongoose.Promise = global.Promise;
 
 const db = require('./config/keys').mongoURI;
 mongoose.connect(db, {
-    useNewUrlParser: true
-})
+        useNewUrlParser: true
+    })
     .then(() => {
 
         console.log(`Connected to database ${db}`);
@@ -52,10 +52,8 @@ mongoose.connect(db, {
     });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
     console.log(`Now listening to port ${PORT}`);
 })
-
-

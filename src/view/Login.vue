@@ -83,10 +83,7 @@ export default {
         this.$store
           .dispatch("loginAsync", this.credentials )
           .then((response) => {
-            console.log(response)
-            if(response.data.userType=="Blogger"){
-              this.$router.push("/bloggerdashboard")
-            }else{
+            if(response){
               this.$router.push("/dashboard")
             }
           })
@@ -143,3 +140,4 @@ export default {
   margin-left: 20px;
 }
 </style>
+

@@ -10,6 +10,8 @@
                   <v-img :src="img" class="picture" @click="$refs.file.click()" dark></v-img>
                   <input ref="file" type="file" style="display:none" @change="onFileChange()">
                 </center>
+                  <v-spacer></v-spacer>
+              <v-spacer></v-spacer>
               </v-card>
             <!-- </v-card> -->
           </v-col>
@@ -109,8 +111,8 @@
   text-align: center;
 }
 .picture {
-  height: 20vh;
-  width: 20vh;
+  height: 30vh;
+  width: 30vh;
 }
 .mx-auto {
   margin-top: 5%;
@@ -122,13 +124,11 @@
 #card1 {
   margin-top: 60%;
 }
-.card2{
-  width:20px;
-}
+
 </style>
 
 <script>
-import $ from "jquery";
+// import $ from "jquery";
 export default {
   components: {
     //   EditProfile
@@ -155,7 +155,6 @@ export default {
         password: this.EditPassword
       };
       console.log(data)
-      this.dialog = false;
       this.$store
         .dispatch("updateSync", data)
         .then(response => {
@@ -172,20 +171,20 @@ export default {
     cancel() {
       this.$router.push("dashboard");
     },
-    onSelect() {
-      const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-      const file = this.$refs.file.files[0];
-      this.file = file;
-      if (!allowedTypes.includes(file.type)) {
-        this.message = "Filetype is wrong!!";
-      }
-      if (file.size > 500000) {
-        this.message = "Too large, max size allowed is 500kb";
-      }
-      var img = URL.createObjectURL(file);
-      //this.file = img;
-      $("#img").attr("src", img);
-    },
+    // onSelect() {
+    //   const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    //   const file = this.$refs.file.files[0];
+    //   this.file = file;
+    //   if (!allowedTypes.includes(file.type)) {
+    //     this.message = "Filetype is wrong!!";
+    //   }
+    //   if (file.size > 500000) {
+    //     this.message = "Too large, max size allowed is 500kb";
+    //   }
+    //   var img = URL.createObjectURL(file);
+    //   //this.file = img;
+    //   $("#img").attr("src", img);
+    // },
     redirect(router) {
       this.$router.push(router);
     }
