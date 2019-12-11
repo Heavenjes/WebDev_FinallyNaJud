@@ -14,8 +14,8 @@
           </v-list-item>
           <v-list-item link two-line class="title">
             <v-list-item-content>
-              <v-list-item-title>Sandra Adams</v-list-item-title>
-              <v-list-item-subtitle>User</v-list-item-subtitle>
+              <v-list-item-title>{{name}}</v-list-item-title>
+              <v-list-item-subtitle>{{usertype}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -110,6 +110,7 @@
 import Post from "components/Post.vue";
 import Uploaded_Post from "components/Uploaded_Posts.vue";
 import axios from 'axios'
+// import { loadavg } from 'os';
 export default {
   // name: "UploadPost",
   components: {
@@ -119,6 +120,8 @@ export default {
   data() {
     return {
       dialog: false,
+      name : sessionStorage.getItem("Name"),
+      usertype : sessionStorage.getItem("Usertype"),
       post: {
         files: [],
         rating: 0
@@ -158,10 +161,18 @@ export default {
       console.log("yo");
     },
     logout: function() {
-      sessionStorage.clear();
-      localStorage.removeItem("jwt");
-      delete axios.defaults.headers.common["Authorization"];
-      this.$router.push("/login");
+      // this.$store
+      //   .dispatch("logout")
+      //   .then(response => {
+      //     if (response) {
+      //       this.$router.push("login");
+      //     }
+      //   })
+      //   .catch(err => console.log(err));
+        localStorage.removeItem("jwt")
+        sessionStorage.clear()
+        delete axios.defaults.headers.common['Authorization']
+        this.$router.push("/login");
     }
   }
 };

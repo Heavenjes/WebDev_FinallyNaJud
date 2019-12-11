@@ -7,16 +7,16 @@ import Dashboard from "@/view/Dashboard";
 import BloggerDashboard from "@/view/BloggerDashboard";
 import Home from "@/view/Home";
 import MyAccount from "@/view/MyAccount"
-import store from '../store'
+// import store from '../store'
 
 
 Vue.use(VueRouter);
 
 const auth = (to, from, next) => {
-  if (store.getters.isLoggedIn) {
-    next()
+  if (localStorage.getItem("jwt") != '') {
+    next();
   } else {
-    next('/login')
+    next("/login");
   }
 }
 
@@ -26,20 +26,34 @@ const routes = [
     path: "/register",
     name: "signup",
     component: Signup,
-    tokenRequired : false
+    // tokenRequired : false,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("token") != "") {
+        next("/dashboard");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/login",
     name: "login",
     component: Login,
-    tokenRequired : false
+    // tokenRequired : false,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("token") != null) {
+        next("/dashboard");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,
     beforeEnter: auth,
-    tokenRequired : true
+    // tokenRequired : true
 
   },
   {
@@ -47,13 +61,14 @@ const routes = [
     name: "bdashboard",
     component: BloggerDashboard,
     beforeEnter: auth,
-    tokenRequired : true
+    // tokenRequired : true
   },
   {
     path: "/",
     name: "home",
     component: Home,
-    tokenRequired : false
+    // tokenRequired : false,
+    beforeEnter: auth,
 
   },
   {
@@ -61,7 +76,7 @@ const routes = [
     name: "myaccount",
     component: MyAccount,
     beforeEnter: auth,
-    tokenRequired : true
+    // tokenRequired : true
   },
 ]
 

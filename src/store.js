@@ -24,6 +24,7 @@ export default new Vuex.Store({
         },
         logout(state) {
             localStorage.removeItem('jwt')
+            sessionStorage.clear()
             state.status = ''
             state.token = ''
         },
@@ -32,7 +33,7 @@ export default new Vuex.Store({
         loginAsync({ commit }, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({ url: 'http://localhost:3001/api/users/login', data: { data: user }, method: 'POST' })
+                axios({ url: 'http://localhost:3000/api/users/login', data: { data: user }, method: 'POST' })
                     .then(resp => {
                         console.log(resp.data)
                         if (resp.data == "Account not found!") {
@@ -47,6 +48,7 @@ export default new Vuex.Store({
                                 sessionStorage.setItem("Username", user.username),
                                 sessionStorage.setItem("Email", user.email),
                                 sessionStorage.setItem("Password", user.password)
+                            sessionStorage.setItem("Usertype", user.userType)
                             if (token) {
                                 localStorage.setItem('jwt', token)
                             }
@@ -67,7 +69,7 @@ export default new Vuex.Store({
         registerAsync({ commit }, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios.post('http://localhost:3001/api/users/register', user)
+                axios.post('http://localhost:3000/api/users/register', user)
                     .then(resp => {
                         resolve(resp)
                     })
@@ -83,7 +85,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('auth_request')
                 console.log(user)
-                axios.put('http://localhost:3001/api/users/account', user)
+                axios.put('http://localhost:3000/api/users/account', user)
                     .then(resp => {
                         const token = localStorage.getItem('jwt')
                         const user = resp.data
@@ -92,6 +94,7 @@ export default new Vuex.Store({
                             sessionStorage.setItem("Username", user.username),
                             sessionStorage.setItem("Email", user.email),
                             sessionStorage.setItem("Password", user.password)
+                            sessionStorage.setItem("Usertype", user.userType)
                         if (token) {
                             localStorage.setItem('jwt', token)
                         }
@@ -109,16 +112,13 @@ export default new Vuex.Store({
         },
 
         // logout({ commit }) {
-        //     return new Promise((resolve, reject) => {
+        //     return new Promise((resolve) => {
         //         console.log("logout")
         //         commit('logout')
-        //         localStorage.removeItem('jwt')
         //         delete axios.defaults.headers.common['Authorization']
-        //         resolve()
-        //     })
-        //     .catch(err => {
-        //         reject(err)
-        //     })
+        //         this.$router.push("/login");
+        //         resolve("logout")
+        // })
         // }
     },
 

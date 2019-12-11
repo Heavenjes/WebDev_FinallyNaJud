@@ -100,7 +100,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="UpdateAccount">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="UpdateAccount">edit</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -135,7 +135,7 @@ export default {
   },
   data() {
     return {
-      img: require("@/assets/back.jpg"),
+      img: require("@/assets/account.png"),
       name: sessionStorage.getItem("Name"),
       username: sessionStorage.getItem("Username"),
       password: sessionStorage.getItem("Password"),
@@ -171,20 +171,7 @@ export default {
     cancel() {
       this.$router.push("dashboard");
     },
-    // onSelect() {
-    //   const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-    //   const file = this.$refs.file.files[0];
-    //   this.file = file;
-    //   if (!allowedTypes.includes(file.type)) {
-    //     this.message = "Filetype is wrong!!";
-    //   }
-    //   if (file.size > 500000) {
-    //     this.message = "Too large, max size allowed is 500kb";
-    //   }
-    //   var img = URL.createObjectURL(file);
-    //   //this.file = img;
-    //   $("#img").attr("src", img);
-    // },
+   
     redirect(router) {
       this.$router.push(router);
     }
